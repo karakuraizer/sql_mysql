@@ -1,0 +1,58 @@
+DB size
+
+SELECT table_schema AS "Database", 
+ROUND(SUM(data_length + index_length) / 1024 / 1024, 2) AS "Size (MB)" 
+FROM information_schema.TABLES 
+GROUP BY table_schema;
+
+
+
+show tables; 
+
+select * from zm.Monitors;
+
+update zm.Storage set Id=2 where Id=4;
+
+update zm.Storage set Id=Id+1;
+
+
+sudo mysql --socket=/zoneminder/mysql/mysql.sock --user=root --password=mysqlpsswd --database zm 
+
+SELECT table_name AS "Table",
+ROUND(((data_length + index_length) / 1024 / 1024), 2) AS "Size (MB)"
+FROM information_schema.TABLES
+WHERE table_schema = "database_name" <<<<<<<<<<<<<<<<<<<<<<<<<<<<
+ORDER BY (data_length + index_length) DESC;
+
+SELECT `COLUMN_NAME` 
+FROM `INFORMATION_SCHEMA`.`COLUMNS` 
+WHERE `TABLE_SCHEMA`='yourdatabasename' 
+    AND `TABLE_NAME`='yourtablename';
+
+
+describe [db_name.]table_name;
+
+for formatted output, or
+
+show create table [db_name.]table_name;
+
+
+SELECT what_to_select
+FROM which_table
+WHERE conditions_to_satisfy;
+
+
+insert into zm.Storage (`Id`,`Path`,`Name`,`Type`,`Scheme`,`DoDelete`) values (0,'/var/cache/zoneminder/events_0','Default','local','Medium','1');
+
+
+
+CREATE EVENT IF NOT EXISTS `zm.Frames_Clean_Older_Than_30_days`
+ON SCHEDULE
+  EVERY 5 DAY_HOUR
+  COMMENT 'Clean up log connections at 5 AM.'
+  DO
+    DELETE FROM zm.Frames
+    WHERE TimeStamp < DATE_SUB(NOW(), INTERVAL 30 DAY)
+    
+    
+DELETE FROM zm.Frames where TimeStamp < now() - interval 30 DAY;
